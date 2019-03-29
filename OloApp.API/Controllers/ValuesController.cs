@@ -2,16 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OloApp.API.Data;
 
 namespace OloApp.API.Controllers
 {
+    //For the use of JWT Token
+    [Authorize]
     // http://localhost:5000/api/values
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    // What is ApiController
+    // Kailangan ispecify yung Route.
+
+    public class ValuesController : ControllerBase 
+    // ControllerBase kasi View natin ay yung angular.
     {
         // 3.1
         private readonly DataContext _context;
@@ -21,6 +28,7 @@ namespace OloApp.API.Controllers
 
         }
         // GET api/values
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetValues()
         {

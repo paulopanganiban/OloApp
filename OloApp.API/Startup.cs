@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using OloApp.API.Data;
 
 namespace OloApp.API
@@ -28,15 +31,41 @@ namespace OloApp.API
         public void ConfigureServices(IServiceCollection services)
         {
             // 2.3
-           // services.AddDbContext<DataContext>(x => x.UseSqlite("Connectionstring"));
-           
+            // services.AddDbContext<DataContext>(x => x.UseSqlite("Connectionstring"));
+
             // 2.4
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // 5.3
             services.AddCors();
+            // 10.1
+            services.AddScoped<IAuthRepository, AuthRepository>();
+            // why AddScoped? because
+            // service is created once per request.
+            // available na siya for injection service in our controllers.
+            // inject natin IAuth repo sa controllers, tas hahanapin niya
+            // concrete which is AuthRepo
 
+            // 14
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(
+                optionsOLO =>
+                {
+                    optionsOLO.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+
+                        IssuerSigningKey =
+                        new SymmetricSecurityKey(
+                            Encoding.ASCII.GetBytes(
+                                Configuration.GetSection("AppSettings:Token").Value)
+                                                 ),
+                      
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,12 +77,13 @@ namespace OloApp.API
             }
             else
             {
-              //  app.UseHsts();
+                //  app.UseHsts();
             }
 
-          //  app.UseHttpsRedirection();
-          // 5.3
+            //  app.UseHttpsRedirection();
+            // 5.3
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

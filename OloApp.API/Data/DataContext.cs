@@ -11,5 +11,6 @@ namespace OloApp.API.Data
         { }
         // 2.2
         public DbSet<Value> Values { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
