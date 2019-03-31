@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <i class="fa fa-smile-o"></i>
+  </a>
+
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item active">
+      <a class="nav-link" href="#">Matches</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Lists</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Messages</a>
+    </li>
+  </ul>
+
+  <form #loginOloForm="ngForm" (ngSubmit)="login()">
+    <table class="example-full-width" cellspacing="0">
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <input
+              [(ngModel)]="modelOLO.Username"
+              name="Username"
+              required
+              matInput
+              placeholder="Username"
+            />
+          </mat-form-field>
+        </td>
+
+        <td>
+          <mat-form-field class="example-full-width">
+            <input
+              [(ngModel)]="modelOLO.Password"
+              name="Password"
+              required
+              matInput
+              placeholder="Password"
+            />
+          </mat-form-field>
+        </td>
+    
+
+      <td>
+          <button [disabled]="!loginOloForm.valid" mat-stroked-button color="primary" type="submit">Login</button>
+      </td>
+    </tr>
+    </table>
+
+  </form>
+ 
+</nav>
+
+<!-- <pre>
+  Dito Kailangan yung #passwordShits="ngModel"
+  Form Valid: {{loginOloForm.valid}}
+  Form Touched: {{loginOloForm.touched}}
+</pre> -->
