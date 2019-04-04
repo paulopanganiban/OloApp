@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { RouterConstructor, ROUTERS } from './router-constructor';
 
 @Component({
   selector: 'app-main-nav',
@@ -10,6 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class MainNavComponent {
 
+  routers = ROUTERS;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)

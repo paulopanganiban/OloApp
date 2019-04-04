@@ -1,0 +1,33 @@
+<mat-toolbar color="primary">Instant Search</mat-toolbar>
+
+<section>
+  <mat-form-field class="example-form-field">
+    <input
+      matInput
+      type="text"
+      placeholder="Search"
+      [(ngModel)]="searchTermOLO"
+      (ngModelChange)="newSearch(searchTermOLO)"
+    />
+    <!-- ngModelChange ay fixed property event -->
+    <button
+      mat-button
+      *ngIf="searchTermOLO"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="searchTermOLO = ''"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+    <span  *ngIf="searchTermOLO">
+    <div *ngFor="let result of results | async">
+      {{ result.name | json }}
+    </div>
+  </span>
+  </mat-form-field>
+  <button (click)="getPosts()">getPosts()</button>
+  <div *ngFor="let post of posts | async">
+    {{ post | json }}
+  </div>
+</section>

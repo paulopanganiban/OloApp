@@ -1,21 +1,24 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light">
-  <a class="navbar-brand" href="#">
-    <i class="fa fa-smile-o"></i>
-  </a>
+<mat-toolbar class="mat-elevation-z1">
+    <span>O</span>
+  <button *ngIf="loggedIn()" mat-button [matMenuTriggerFor]="menu">
+    Welcome User
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <i class="material-icons">
+        account_circle
+      </i>
+      Edit Profile
+    </button>
+    <button mat-menu-item>
+      <i class="material-icons">
+        exit_to_app
+      </i>
+      Logout
+    </button>
+  </mat-menu>
 
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item active">
-      <a class="nav-link" href="#">Matches</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Lists</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Messages</a>
-    </li>
-  </ul>
-
-  <form #loginOloForm="ngForm" (ngSubmit)="login()">
+  <form  *ngIf="!loggedIn()" #loginOloForm="ngForm" (ngSubmit)="login()">
     <table class="example-full-width" cellspacing="0">
       <tr>
         <td>
@@ -35,24 +38,31 @@
             <input
               [(ngModel)]="modelOLO.Password"
               name="Password"
+              type="password"
               required
               matInput
               placeholder="Password"
             />
           </mat-form-field>
         </td>
-    
 
-      <td>
-          <button [disabled]="!loginOloForm.valid" mat-stroked-button color="primary" type="submit">Login</button>
-      </td>
-    </tr>
+        <td>
+          <button
+            [disabled]="!loginOloForm.valid"
+            mat-stroked-button
+            color="primary"
+            type="submit"
+          >
+            Login
+          </button>
+        </td>
+      </tr>
     </table>
-
   </form>
- 
-</nav>
-
+</mat-toolbar>
+<div class="container">
+  <app-home></app-home>
+</div>
 <!-- <pre>
   Dito Kailangan yung #passwordShits="ngModel"
   Form Valid: {{loginOloForm.valid}}

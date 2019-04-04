@@ -10,16 +10,28 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OloMaterial } from './olo-material';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './_services/auth.service';
-import { MainNavComponent } from './main-nav/main-nav.component';
+import { MainNavComponent } from './_main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
+import { CalendarTrackerComponent } from './calendar-tracker/calendar-tracker.component';
+import { MessagesComponent } from './calendar-tracker/messages/messages.component';
+import { MessageService } from './_services/message.service';
+import { InstantSearchGithubComponent } from './instant-search-github/instant-search-github.component';
+import { RxjsLearnComponent } from './rxjs-learn/rxjs-learn.component';
+import { HomeComponent } from './home/home.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       ValueComponent,
       NavbarComponent,
-      MainNavComponent
+      MainNavComponent,
+      CalendarTrackerComponent,
+      MessagesComponent,
+      InstantSearchGithubComponent,
+      RxjsLearnComponent,
+      HomeComponent,
+      RegisterComponent
    ],
    imports: [
       BrowserModule,
@@ -28,14 +40,11 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, Mat
       BrowserAnimationsModule,
       OloMaterial,
       FormsModule,
-      LayoutModule,
-      MatToolbarModule,
-      MatButtonModule,
-      MatSidenavModule,
-      MatIconModule,
-      MatListModule
+      LayoutModule
    ],
    providers: [
+      AuthService,
+      MessageService,
       AuthService
    ],
    bootstrap: [

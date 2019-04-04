@@ -1,0 +1,22 @@
+<div class="container mt-5">
+  <div *ngIf="!registerMode" style="text-align: center">
+    <h1>Book It</h1>
+    <p class="lead">Lolz</p>
+    <div class="text-center">
+      <button mat-raised-button class="mr-1" (click)="registerToggle()" color="accent">Register</button>
+      <button mat-raised-button color="primary">Login</button>
+    </div>
+  </div>
+
+  <div *ngIf="registerMode" class="container">
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <app-register
+        (cancelRegister)="cancelRegisterMode($event)"></app-register>
+      </div>
+    </div>
+  </div>
+</div>
+<p *ngFor="let value of values">
+  {{value.name | json }}
+</p>
