@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using OloApp.API.Data;
+using OloApp.API.Helpers;
 
 namespace OloApp.API
 {
@@ -25,7 +28,7 @@ namespace OloApp.API
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+                public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -77,6 +80,17 @@ namespace OloApp.API
             }
             else
             {
+                // 20
+                app.UseExceptionHandler(builder => 
+                builder.Run(async context => {context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                var error = context.Features.Get<IExceptionHandlerFeature>();
+                if (error != null)
+                {
+                    context.Response.AddApplicationError(error.Error.Message);
+                    
+                    await context.Response.WriteAsync(error.Error.Message);
+                }
+                }));
                 //  app.UseHsts();
             }
 

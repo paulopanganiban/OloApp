@@ -20,6 +20,12 @@ import { RxjsLearnComponent } from './rxjs-learn/rxjs-learn.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 
+import { BarecodeScannerLivestreamModule } from 'ngx-barcode-scanner';
+import { DemoComponent } from './demo/demo.component';
+import { NgxBarcodeInputModule } from 'ngx-barcode-input';
+import { ErrorInterceptorServiceProvider } from './_services/error-interceptor.service';
+
+
 @NgModule({
    declarations: [
       AppComponent,
@@ -31,7 +37,8 @@ import { RegisterComponent } from './register/register.component';
       InstantSearchGithubComponent,
       RxjsLearnComponent,
       HomeComponent,
-      RegisterComponent
+      RegisterComponent,
+      DemoComponent
    ],
    imports: [
       BrowserModule,
@@ -40,12 +47,16 @@ import { RegisterComponent } from './register/register.component';
       BrowserAnimationsModule,
       OloMaterial,
       FormsModule,
-      LayoutModule
+      LayoutModule,
+      BarecodeScannerLivestreamModule,
+      NgxBarcodeInputModule,
+
    ],
    providers: [
       AuthService,
       MessageService,
-      AuthService
+      AuthService,
+      ErrorInterceptorServiceProvider
    ],
    bootstrap: [
       AppComponent
